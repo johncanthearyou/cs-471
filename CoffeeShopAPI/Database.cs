@@ -31,6 +31,21 @@ public static class Database
         return password;
     }
 
+    public static void AddUser(String username, String password)
+    {
+        SqliteConnection conn = CreateConnection();
+        SqliteCommand sqlite_cmd;
+        sqlite_cmd = conn.CreateCommand();
+
+        String user_exists = GetPasswordForUser(username);
+
+        if (user_exists == "null")
+        {
+            sqlite_cmd.CommandText = $"INSERT INTO USERS VALUES ({username}, {password});";
+            sqlite_cmd.ExecuteReader();        
+        }
+    }
+
     public static void ReadData(SqliteConnection conn, String query)
     {
         SqliteDataReader sqlite_datareader;

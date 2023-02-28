@@ -22,4 +22,13 @@ public class UserController : ControllerBase
 
         return password;
     }
+
+    [HttpPost]
+    public void Post([FromQuery]String username, [FromQuery]String password)
+    {
+        SqliteConnection sqlConnection = Database.CreateConnection();
+        Database.AddUser(username, password);
+
+        return;
+    }
 }
