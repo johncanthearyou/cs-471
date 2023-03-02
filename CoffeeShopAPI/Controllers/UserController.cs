@@ -15,7 +15,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    public String Get([FromQuery]String username)
+    public String Get([FromQuery] String username)
     {
         SqliteConnection sqlConnection = Database.CreateConnection();
         String password = Database.GetPasswordForUser(username);
@@ -24,10 +24,19 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public void Post([FromQuery]String username, [FromQuery]String password)
+    public void Post([FromQuery] String username, [FromQuery] String password)
     {
         SqliteConnection sqlConnection = Database.CreateConnection();
         Database.AddUser(username, password);
+
+        return;
+    }
+
+    [HttpDelete]
+    public void Delete([FromQuery] String username)
+    {
+        SqliteConnection sqlConnection = Database.CreateConnection();
+        Database.RemoveUser(username);
 
         return;
     }

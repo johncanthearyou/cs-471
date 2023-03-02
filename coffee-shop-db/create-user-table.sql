@@ -1,4 +1,5 @@
-CREATE TABLE users(
+CREATE TABLE users
+(
    username text primary key not null,
-   password text             not null
+   password text not null
 );
