@@ -16,46 +16,49 @@ public class InventoryController : ControllerBase
     }
 
     [HttpGet]
-    public List<List<String>> Get()
+    public List<Dictionary<string, string>> Get()
     {
         SqliteConnection sqlConnection = Database.CreateConnection();
-        List<List<String>> inventory = Database.ViewItems();
+        List<Dictionary<string, string>> inventory = InventoryDB.ViewItems();
 
         return inventory;
     }
 
-    // [HttpGet]
-    // public String Get(int id)
-    // {
-    //     SqliteConnection sqliteConnection = Database.CreateConnection();
-    //     String item = Database.ViewSpecificItem(id);
-
-    //     return item;
-    // }
-
-    [HttpPost]
-    public void Post(String name, int quantity)
+    [HttpGet]
+    [Route("{id}")]
+    public Dictionary<string, string> Get(int id)
     {
         SqliteConnection sqliteConnection = Database.CreateConnection();
-        Database.AddNewItem(name, quantity);
+        Dictionary<string, string> item = InventoryDB.ViewSpecificItem(id);
+
+        return item;
+    }
+
+    [HttpPost]
+    public void Post([FromQuery] String name, [FromQuery] int quantity, [FromQuery] String size, [FromQuery] float price)
+    {
+        SqliteConnection sqliteConnection = Database.CreateConnection();
+        InventoryDB.AddNewItem(name, quantity, size, price);
 
         return;
     }
 
     [HttpDelete]
-    public void Delete(String name)
+    [Route("{id}")]
+    public void Delete(int id)
     {
         SqliteConnection sqliteConnection = Database.CreateConnection();
-        Database.RemoveItem(name);
+        InventoryDB.RemoveItem(id);
 
         return;
     }
 
-    [HttpPatch]
-    public void Patch(String name, int quantity)
+    [HttpPut]
+    [Route("{id}")]
+    public void HttpPut(int id, [FromQuery] int quantity, [FromQuery] float price)
     {
         SqliteConnection sqliteConnection = Database.CreateConnection();
-        Database.UpdateItemQuantity(name, quantity);
+        InventoryDB.UpdateItemQuantity(id, quantity, price);
 
         return;
     }

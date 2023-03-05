@@ -15,28 +15,49 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    public String Get([FromQuery] String username)
+    public List<Dictionary<string, string>> Get()
     {
         SqliteConnection sqlConnection = Database.CreateConnection();
-        String password = Database.GetPasswordForUser(username);
+        List<Dictionary<string, string>> users = UserDB.GetAllUsers();
 
-        return password;
+        return users;
+    }
+
+    [HttpGet]
+    [Route("{username}")]
+    public Dictionary<string, string> Get(String username)
+    {
+        SqliteConnection sqlConnection = Database.CreateConnection();
+        Dictionary<string, string> user = UserDB.GetSingleUser(username);
+
+        return user;
     }
 
     [HttpPost]
-    public void Post([FromQuery] String username, [FromQuery] String password)
+    public void Post([FromQuery] String username, [FromQuery] String password, [FromQuery] String permission)
     {
         SqliteConnection sqlConnection = Database.CreateConnection();
-        Database.AddUser(username, password);
+        UserDB.AddUser(username, password, permission);
 
         return;
     }
 
     [HttpDelete]
-    public void Delete([FromQuery] String username)
+    [Route("{username}")]
+    public void Delete(String username)
     {
         SqliteConnection sqlConnection = Database.CreateConnection();
-        Database.RemoveUser(username);
+        UserDB.RemoveUser(username);
+
+        return;
+    }
+
+    [HttpPut]
+    [Route("{username}")]
+    public void Put(String username, [FromQuery] String password = "", [FromQuery] String permission = "")
+    {
+        SqliteConnection sqliteConnection = Database.CreateConnection();
+        UserDB.UpdateUser(username, password, permission);
 
         return;
     }

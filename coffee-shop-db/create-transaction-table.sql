@@ -4,6 +4,8 @@ CREATE TABLE transactions
   drinks json,
   food json,
   payment text,
-  date datetime DEFAULT getdate,
-  customer_name text not null
+  total_cost float not null,
+  date datetime DEFAULT CURRENT_TIMESTAMP,
+  customer_name text not null,
+  complete boolean DEFAULT 0
 );

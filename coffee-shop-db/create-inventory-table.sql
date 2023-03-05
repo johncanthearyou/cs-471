@@ -1,5 +1,8 @@
 CREATE TABLE inventory
 (
-  name text primary key,
-  quantity text not null
+  id INTEGER primary key AUTOINCREMENT,
+  name text not null,
+  quantity int not null,
+  size string not null,
+  price float not null
 );
