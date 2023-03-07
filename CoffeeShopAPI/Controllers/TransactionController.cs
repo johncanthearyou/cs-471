@@ -16,29 +16,29 @@ public class TransactionController : ControllerBase
     }
 
     [HttpGet]
-    public List<Dictionary<string, string>> Get()
+    public List<Dictionary<string, object>> Get()
     {
         SqliteConnection sqlConnection = Database.CreateConnection();
-        List<Dictionary<string, string>> transactions = TransactionDB.ViewTransactions();
+        List<Dictionary<string, object>> transactions = TransactionDB.ViewTransactions();
 
         return transactions;
     }
 
     [HttpGet]
     [Route("{id}")]
-    public Dictionary<string, string> Get(int id)
+    public Dictionary<string, object> Get(int id)
     {
         SqliteConnection sqlConnection = Database.CreateConnection();
-        Dictionary<string, string> transaction = TransactionDB.ViewSpecificTransaction(id);
+        Dictionary<string, object> transaction = TransactionDB.ViewSpecificTransaction(id);
 
         return transaction;
     }
 
     [HttpPost]
-    public void Post([FromQuery] String payment, [FromQuery] float totalCost, [FromQuery] String customerName)
+    public void Post([FromBody] Dictionary<string, int> items, [FromQuery] String payment, [FromQuery] float totalCost, [FromQuery] String customerName)
     {
         SqliteConnection sqlConnection = Database.CreateConnection();
-        TransactionDB.NewTransaction(payment, totalCost, customerName);
+        TransactionDB.NewTransaction(items, payment, totalCost, customerName);
 
         return;
     }
