@@ -1,5 +1,11 @@
 import { LoginPage } from "./LoginPage";
+import { CashierPage } from "./CashierPage";
+import { ManagerPage } from "./ManagerPage";
+import { BaristaPage } from "./BaristaPage";
 
 export {
-    LoginPage
+    LoginPage,
+    CashierPage,
+    ManagerPage,
+    BaristaPage
 };
