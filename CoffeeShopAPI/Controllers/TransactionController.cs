@@ -18,6 +18,8 @@ public class TransactionController : ControllerBase
     [HttpGet]
     public List<Dictionary<string, object>> Get()
     {
+        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
         SqliteConnection sqlConnection = Database.CreateConnection();
         List<Dictionary<string, object>> transactions = TransactionDB.ViewTransactions();
 
@@ -28,6 +30,8 @@ public class TransactionController : ControllerBase
     [Route("{id}")]
     public Dictionary<string, object> Get(int id)
     {
+        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
         SqliteConnection sqlConnection = Database.CreateConnection();
         Dictionary<string, object> transaction = TransactionDB.ViewSpecificTransaction(id);
 
@@ -37,6 +41,8 @@ public class TransactionController : ControllerBase
     [HttpPost]
     public void Post([FromBody] Dictionary<string, int> items, [FromQuery] String payment, [FromQuery] float totalCost, [FromQuery] String customerName)
     {
+        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
         SqliteConnection sqlConnection = Database.CreateConnection();
         TransactionDB.NewTransaction(items, payment, totalCost, customerName);
 
@@ -47,6 +53,8 @@ public class TransactionController : ControllerBase
     [Route("{id}")]
     public void Put(int id, [FromQuery] String payment = "", [FromQuery] String customerName = "")
     {
+        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
         SqliteConnection sqliteConnection = Database.CreateConnection();
         TransactionDB.EditTransaction(id, payment, customerName);
 
@@ -57,6 +65,8 @@ public class TransactionController : ControllerBase
     [Route("{id}/complete")]
     public void Put(int id)
     {
+        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
         SqliteConnection sqliteConnection = Database.CreateConnection();
         TransactionDB.MarkTransactionComplete(id);
 
@@ -67,6 +77,8 @@ public class TransactionController : ControllerBase
     [Route("{id}")]
     public void Delete(int id)
     {
+        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
         SqliteConnection sqliteConnection = Database.CreateConnection();
         TransactionDB.RemoveTransaction(id);
 

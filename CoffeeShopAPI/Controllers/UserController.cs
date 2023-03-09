@@ -17,6 +17,8 @@ public class UserController : ControllerBase
     [HttpGet]
     public List<Dictionary<string, string>> Get()
     {
+        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
         SqliteConnection sqlConnection = Database.CreateConnection();
         List<Dictionary<string, string>> users = UserDB.GetAllUsers();
 
@@ -27,6 +29,8 @@ public class UserController : ControllerBase
     [Route("{username}")]
     public Dictionary<string, string> Get(String username)
     {
+        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
         SqliteConnection sqlConnection = Database.CreateConnection();
         Dictionary<string, string> user = UserDB.GetSingleUser(username);
 
@@ -36,6 +40,8 @@ public class UserController : ControllerBase
     [HttpPost]
     public void Post([FromQuery] String username, [FromQuery] String password, [FromQuery] String permission)
     {
+        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
         SqliteConnection sqlConnection = Database.CreateConnection();
         UserDB.AddUser(username, password, permission);
 
@@ -46,6 +52,8 @@ public class UserController : ControllerBase
     [Route("{username}")]
     public void Delete(String username)
     {
+        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
         SqliteConnection sqlConnection = Database.CreateConnection();
         UserDB.RemoveUser(username);
 
@@ -56,6 +64,8 @@ public class UserController : ControllerBase
     [Route("{username}")]
     public void Put(String username, [FromQuery] String password = "", [FromQuery] String permission = "")
     {
+        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
         SqliteConnection sqliteConnection = Database.CreateConnection();
         UserDB.UpdateUser(username, password, permission);
 

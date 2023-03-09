@@ -19,6 +19,8 @@ public class RewardController : ControllerBase
     [Route("{id}")]
     public Dictionary<string, string> Get(int id)
     {
+        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
         SqliteConnection sqliteConnection = Database.CreateConnection();
         Dictionary<string, string> customer = RewardsDB.FindCustomer(id);
 
@@ -28,6 +30,8 @@ public class RewardController : ControllerBase
     [HttpPost]
     public void Post([FromQuery] String customerName, [FromQuery] String phoneNumber, [FromQuery] String email = "")
     {
+        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
         SqliteConnection sqliteConnection = Database.CreateConnection();
         RewardsDB.AddNewCustomer(customerName, phoneNumber, email);
 
@@ -38,6 +42,8 @@ public class RewardController : ControllerBase
     [Route("{id}")]
     public void Put(int id, [FromQuery] String phoneNumber = "", [FromQuery] String email = "")
     {
+        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
         SqliteConnection sqliteConnection = Database.CreateConnection();
         RewardsDB.EditCustomer(id, phoneNumber, email);
 
@@ -48,6 +54,8 @@ public class RewardController : ControllerBase
     [Route("{id}/drinks")]
     public void Put(int id, [FromQuery] int numDrinks)
     {
+        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
         SqliteConnection sqliteConnection = Database.CreateConnection();
         RewardsDB.UpdateCustomerDrinks(id, numDrinks);
 
@@ -58,6 +66,8 @@ public class RewardController : ControllerBase
     [Route("{id}")]
     public void Delete(int id)
     {
+        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
         SqliteConnection sqliteConnection = Database.CreateConnection();
         RewardsDB.RemoveCustomer(id);
 
