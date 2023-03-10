@@ -18,8 +18,6 @@ public class InventoryController : ControllerBase
     [HttpGet]
     public List<Dictionary<string, string>> Get()
     {
-        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-
         SqliteConnection sqlConnection = Database.CreateConnection();
         List<Dictionary<string, string>> inventory = InventoryDB.ViewItems();
 
@@ -30,8 +28,6 @@ public class InventoryController : ControllerBase
     [Route("{id}")]
     public Dictionary<string, string> Get(int id)
     {
-        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-
         SqliteConnection sqliteConnection = Database.CreateConnection();
         Dictionary<string, string> item = InventoryDB.ViewSpecificItem(id);
 
@@ -41,8 +37,6 @@ public class InventoryController : ControllerBase
     [HttpPost]
     public void Post([FromQuery] String name, [FromQuery] int quantity, [FromQuery] String size, [FromQuery] float price)
     {
-        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-
         SqliteConnection sqliteConnection = Database.CreateConnection();
         InventoryDB.AddNewItem(name, quantity, size, price);
 
@@ -53,8 +47,6 @@ public class InventoryController : ControllerBase
     [Route("{id}")]
     public void Delete(int id)
     {
-        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-
         SqliteConnection sqliteConnection = Database.CreateConnection();
         InventoryDB.RemoveItem(id);
 
@@ -65,8 +57,6 @@ public class InventoryController : ControllerBase
     [Route("{id}")]
     public void HttpPut(int id, [FromQuery] int quantity, [FromQuery] float price)
     {
-        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-
         SqliteConnection sqliteConnection = Database.CreateConnection();
         InventoryDB.UpdateItemQuantity(id, quantity, price);
 

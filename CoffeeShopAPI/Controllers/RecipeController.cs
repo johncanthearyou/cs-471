@@ -19,8 +19,6 @@ public class RecipeController : ControllerBase
     [Route("{name}")]
     public Dictionary<string, string> Get(String name)
     {
-        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-
         SqliteConnection sqlConnection = Database.CreateConnection();
         Dictionary<string, string> recipe = RecipesDB.ViewRecipe(name);
 
@@ -30,8 +28,6 @@ public class RecipeController : ControllerBase
     [HttpPost]
     public void Post([FromQuery] String name, [FromQuery] String ingredients)
     {
-        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-
         SqliteConnection sqlConnection = Database.CreateConnection();
         RecipesDB.AddRecipe(name, ingredients);
 
@@ -42,8 +38,6 @@ public class RecipeController : ControllerBase
     [Route("{name}")]
     public void Delete(String name)
     {
-        HttpContext.Response.Headers.Add("Access-Control-Allow-Origin", "*");
-
         SqliteConnection sqlConnection = Database.CreateConnection();
         RecipesDB.RemoveRecipe(name);
 
