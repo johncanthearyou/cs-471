@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export function LoginPage() {
@@ -6,6 +6,7 @@ export function LoginPage() {
     const [message, setMessage] = React.useState('');
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [isManager, setIsManager] = React.useState('');
     const [authSuccess, setAuthSuccess] = React.useState(false);
 
     const handleLogin = () => {
@@ -31,6 +32,7 @@ export function LoginPage() {
                         // Auth failed, warn user
                         setMessage(`Incorrect password for username: '${username}', please try again`);
                     }
+                    setIsManager(json.permission === "manager")
                 }
             })
             .catch((error) => {
@@ -41,30 +43,33 @@ export function LoginPage() {
             })
     }
 
+    useEffect(
+        () => {
+            if (authSuccess) {
+                navigate(
+                    "/worker",
+                    {
+                        state: {
+                            username: username,
+                            isManager: isManager
+                        }
+                    }
+                ) 
+            }
+        },
+        [authSuccess, navigate, username, isManager]
+    );
+
     return (
         <>
-        {
-            authSuccess ?
-            // Auth successful, redirect
-            (
-                navigate("/worker", { state: { username: username } })               
-            )
-            :
-            // Auth failed, show login form
-            (
-                <div>
-                    <p>{message}</p>
-                    <label>Username: </label>
-                    <input type="text" value={username} onChange={(event) => { setUsername(event.target.value) }} />
-                    <br />
-                    <label>Password: </label>
-                    <input type="password" value={password} onChange={(event) => { setPassword(event.target.value) }} />
-                    <br />
-                    <button onClick={handleLogin}>Log In</button>
-                </div>
-                
-            )
-        }
+            <p>{message}</p>
+            <label>Username: </label>
+            <input type="text" value={username} onChange={(event) => { setUsername(event.target.value) }} />
+            <br />
+            <label>Password: </label>
+            <input type="password" value={password} onChange={(event) => { setPassword(event.target.value) }} />
+            <br />
+            <button onClick={handleLogin}>Log In</button>
         </>
     );
 }

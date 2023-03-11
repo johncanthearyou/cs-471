@@ -6,7 +6,9 @@ export function WorkerPage() {
 
     const navigate = useNavigate();
     const username = state?.username;
-    const roles = ["barista", "cashier", "manager"];
+    const isManager = state?.isManager;
+    const roles = ["barista", "cashier"];
+    if (isManager) { roles.push("manager"); }
 
     useEffect(
         () => {
