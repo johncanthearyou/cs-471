@@ -4,12 +4,16 @@ import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
-import { BaristaPage, CashierPage, LoginPage, ManagerPage } from './Pages';
+import { LoginPage, WorkerPage, BaristaPage, CashierPage, ManagerPage } from './Pages';
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <LoginPage />,
+    },
+    {
+        path: "/worker",
+        element: <WorkerPage />,
     },
     {
         path: "/manager",

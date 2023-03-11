@@ -25,7 +25,7 @@ public class UserController : ControllerBase
 
     [HttpGet]
     [Route("{username}")]
-    public Dictionary<string, string> Get(String username)
+    public Dictionary<string, string> Get([FromQuery] String username)
     {
         SqliteConnection sqlConnection = Database.CreateConnection();
         Dictionary<string, string> user = UserDB.GetSingleUser(username);
@@ -44,7 +44,7 @@ public class UserController : ControllerBase
 
     [HttpDelete]
     [Route("{username}")]
-    public void Delete(String username)
+    public void Delete([FromQuery] String username)
     {
         SqliteConnection sqlConnection = Database.CreateConnection();
         UserDB.RemoveUser(username);
@@ -54,7 +54,7 @@ public class UserController : ControllerBase
 
     [HttpPut]
     [Route("{username}")]
-    public void Put(String username, [FromQuery] String password = "", [FromQuery] String permission = "")
+    public void Put([FromQuery] String username, [FromQuery] String password = "", [FromQuery] String permission = "")
     {
         SqliteConnection sqliteConnection = Database.CreateConnection();
         UserDB.UpdateUser(username, password, permission);
