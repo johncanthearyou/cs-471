@@ -1,26 +1,70 @@
-const username = 'username';
-const password = 'password';
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export function LoginPage() {
-  function loginHandler(event) {
-    const username = event.target.username.value;
-    const password = event.target.password.value;
-    
-    alert('username value: ' + username);
-    alert('password value: ' + password);
-  }
+    const navigate = useNavigate();
+    const [message, setMessage] = React.useState('');
+    const [username, setUsername] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const [authSuccess, setAuthSuccess] = React.useState(false);
 
-  return (
-    <form onSubmit={loginHandler}>
-      <label>
-        {username}: <input type="text" id={username} required={true} />
-      </label>
-      <br />
-      <label>
-        {password}: <input type="current-password" id={password} required={true} />
-      </label>
-      <br />
-      <button type="submit">Login</button>
-    </form>
-  );
+    const handleLogin = () => {
+        const url = `http://localhost:5059/user/username?username=${username}`;
+        fetch(url)
+            .then((response) => {
+                // Cast response into json object
+                return response.json();
+            })
+            .then((json) => {
+                // Take json object and determine authentication
+                if (json.password === undefined) {
+                    // No password was given from API, bad username given
+                    setPassword('');
+                    // Warn user
+                    setMessage('Unknown username, please try again.');
+                }
+                else {
+                    // Got a password from API, compare to given value
+                    const success = (json.password !== '' && password === json.password);
+                    setAuthSuccess(success);
+                    if (!authSuccess) {
+                        // Auth failed, warn user
+                        setMessage(`Incorrect password for username: '${username}', please try again`);
+                    }
+                }
+            })
+            .catch((error) => {
+                // Just wipe data and try again
+                setMessage('Unknown error encountered, please try again.')
+                setUsername('');
+                setPassword('');
+            })
+    }
+
+    return (
+        <>
+        {
+            authSuccess ?
+            // Auth successful, redirect
+            (
+                navigate("/worker", { state: { username: username } })               
+            )
+            :
+            // Auth failed, show login form
+            (
+                <div>
+                    <p>{message}</p>
+                    <label>Username: </label>
+                    <input type="text" value={username} onChange={(event) => { setUsername(event.target.value) }} />
+                    <br />
+                    <label>Password: </label>
+                    <input type="password" value={password} onChange={(event) => { setPassword(event.target.value) }} />
+                    <br />
+                    <button onClick={handleLogin}>Log In</button>
+                </div>
+                
+            )
+        }
+        </>
+    );
 }
