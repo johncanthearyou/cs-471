@@ -25,7 +25,7 @@ export function CashierPage() {
     useEffect(
         () => {
             if (username === undefined) {
-                alert(`The route '${location.pathname}' can only be accessed by valid users.\nRedirecting to login page...`)
+                alert(`The route '${location.pathname}' can only be accessed by authenticated users.\nRedirecting to login page...`)
                 navigate("/")
             }
 

@@ -1,3 +1,7 @@
+// TODO:
+// * manage worker schedules
+// * manage inventory 
+
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 
@@ -24,7 +28,7 @@ export function ManagerPage() {
                 })
 
             if (username === undefined) { 
-                alert(`The route '${location.pathname}' can only be accessed by valid users.\nRedirecting to login page...`)
+                alert(`The route '${location.pathname}' can only be accessed by authenticated users.\nRedirecting to login page...`)
                 navigate("/") 
             }
         },
