@@ -15,6 +15,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
+    [Route("all")]
     public List<Dictionary<string, string>> Get()
     {
         SqliteConnection sqlConnection = Database.CreateConnection();
@@ -24,7 +25,6 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    [Route("{username}")]
     public Dictionary<string, string> Get([FromQuery] String username)
     {
         SqliteConnection sqlConnection = Database.CreateConnection();
@@ -34,7 +34,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public void Post([FromQuery] String username, [FromQuery] String password, [FromQuery] String permission)
+    public void Post([FromQuery] String username, [FromQuery] String password, [FromQuery] String permission = "")
     {
         SqliteConnection sqlConnection = Database.CreateConnection();
         UserDB.AddUser(username, password, permission);
@@ -43,7 +43,6 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete]
-    [Route("{username}")]
     public void Delete([FromQuery] String username)
     {
         SqliteConnection sqlConnection = Database.CreateConnection();
@@ -53,7 +52,6 @@ public class UserController : ControllerBase
     }
 
     [HttpPut]
-    [Route("{username}")]
     public void Put([FromQuery] String username, [FromQuery] String password = "", [FromQuery] String permission = "")
     {
         SqliteConnection sqliteConnection = Database.CreateConnection();

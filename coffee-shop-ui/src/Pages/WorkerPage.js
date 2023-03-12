@@ -1,31 +1,35 @@
-import { Link, useNavigate, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom"
+import { useEffect } from "react"
 
 export function WorkerPage() {
-    const { state } = useLocation();
+    //////////
+    // Data //
+    //////////
+    const { state } = useLocation()
+    const navigate = useNavigate()
+    const username = state?.username
+    const isManager = state?.isManager
+    const roles = ["barista", "cashier"]
+    if (isManager) { roles.push("manager") }
 
-    const navigate = useNavigate();
-    const username = state?.username;
-    const isManager = state?.isManager;
-    const roles = ["barista", "cashier"];
-    if (isManager) { roles.push("manager"); }
-
+    //////////////
+    // Handlers //
+    //////////////
     useEffect(
-        () => {
-            if (username === undefined) {
-                navigate("/");
-            }
-        },
+        () => { if (username === undefined) { navigate("/") } },
         [username, navigate]
     )
 
+    ////////////////
+    // Components //
+    ////////////////
     return(
         <>
         {(
             roles.map((role) => {
                 return (
-                    <Link to={`/${role}`} key={role} >{role}<br /></Link>
-                );
+                    <Link to={`/${role}`} key={role} state={{ username: username }}>{role}<br /></Link>
+                )
             })
         )}
         </>

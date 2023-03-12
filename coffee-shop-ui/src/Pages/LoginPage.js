@@ -2,6 +2,9 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export function LoginPage() {
+    //////////
+    // Data //
+    //////////
     const navigate = useNavigate();
     const [message, setMessage] = React.useState('');
     const [username, setUsername] = React.useState('');
@@ -9,9 +12,12 @@ export function LoginPage() {
     const [isManager, setIsManager] = React.useState('');
     const [authSuccess, setAuthSuccess] = React.useState(false);
 
+
+    //////////////
+    // Handlers //
+    //////////////
     const handleLogin = () => {
-        const url = `http://localhost:5059/user/username?username=${username}`;
-        fetch(url)
+        fetch(`http://localhost:5059/user?username=${username}`)
             .then((response) => {
                 // Cast response into json object
                 return response.json();
@@ -59,7 +65,11 @@ export function LoginPage() {
         },
         [authSuccess, navigate, username, isManager]
     );
+    
 
+    ////////////////
+    // Components //
+    ////////////////
     return (
         <>
             <p>{message}</p>

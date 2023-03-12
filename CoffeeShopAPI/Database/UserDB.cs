@@ -61,7 +61,6 @@ public static class UserDB
         sqlite_cmd = conn.CreateCommand();
 
         Dictionary<string, string> user = GetSingleUser(username);
-
         if (!user.Values.Any())
         {
             sqlite_cmd.CommandText = $"INSERT INTO users VALUES ('{username}', '{password}', '{permission}');";
