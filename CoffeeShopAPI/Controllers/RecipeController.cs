@@ -16,20 +16,19 @@ public class RecipeController : ControllerBase
     }
 
     [HttpGet]
-    [Route("{name}")]
-    public Dictionary<string, string> Get(String name)
+    public List<Dictionary<string, string>> Get()
     {
         SqliteConnection sqlConnection = Database.CreateConnection();
-        Dictionary<string, string> recipe = RecipesDB.ViewRecipe(name);
+        List<Dictionary<string, string>> recipe = RecipesDB.ViewAllRecipes();
 
         return recipe;
     }
 
     [HttpPost]
-    public void Post([FromQuery] String name, [FromQuery] String ingredients)
+    public void Post([FromQuery] String name, [FromQuery] float price, [FromQuery] String ingredients)
     {
         SqliteConnection sqlConnection = Database.CreateConnection();
-        RecipesDB.AddRecipe(name, ingredients);
+        RecipesDB.AddRecipe(name, price, ingredients);
 
         return;
     }
